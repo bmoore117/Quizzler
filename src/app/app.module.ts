@@ -24,7 +24,8 @@ const routes: Routes = [
           { path: 'result', component: ResultComponent }
         ]
       }
-    ] },
+    ]
+  },
   { path: 'login', component: LoginComponent },
   { path: '', redirectTo: 'home/quiz', pathMatch: 'full' },
   { path: '**', component: NotFoundComponent }
