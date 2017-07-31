@@ -3,6 +3,8 @@ import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
+import { HttpModule } from '@angular/http';
+
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
@@ -11,6 +13,8 @@ import { QuizComponent } from './components/home/quiz/quiz.component';
 import { ResultComponent } from './components/home/result/result.component';
 
 import { AuthGuard } from './services/auth-guard.service';
+import { AuthService } from './services/auth.service';
+import { AuthHttp } from './services/auth-http.service';
 
 const routes: Routes = [
   { path: 'app', component: AppComponent },
@@ -44,9 +48,10 @@ const routes: Routes = [
   imports: [
     BrowserModule,
     FormsModule,
+    HttpModule,
     RouterModule.forRoot(routes, {enableTracing: true})
   ],
-  providers: [AuthGuard],
+  providers: [AuthGuard, AuthHttp, AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

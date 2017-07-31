@@ -8,7 +8,10 @@ export class AuthGuard implements CanActivate {
   }
 
   canActivate() {
-    console.log('AuthGuard#canActivate called');
+    if (sessionStorage.getItem('id_token')) {
+      return true;
+    }
+
     this.router.navigate(['login']);
     return false;
   }
