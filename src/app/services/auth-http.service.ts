@@ -9,7 +9,7 @@ export class AuthHttp {
   createAuthHeader(headers: Headers) {
     const credential = sessionStorage.getItem('id_token');
     if (credential) {
-      headers.append('Authorization', credential);
+      headers.append('Authorization', 'Bearer ' + credential);
     } // TODO else kick out to login
   }
 

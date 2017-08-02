@@ -7,6 +7,9 @@ import { AuthHttp } from './auth-http.service';
 
 @Injectable()
 export class AuthService {
+
+  redirectUrl: string;
+
   constructor(private http: AuthHttp) {}
 
   login(username: String, password: String): Observable<boolean> {
@@ -16,8 +19,9 @@ export class AuthService {
     return this.http.postWithToken('/api/login', token, undefined)
       .map((response: Response) => {
         console.log('checking response');
-        if (response.status === 200 && response.text() === 'Access granted') {
-          sessionStorage.setItem('id_token', token);
+        if (response.status === 200) {
+          const jwt = response.json();
+          sessionStorage.setItem('id_token', jwt);
           return true;
         } else {
           return false;

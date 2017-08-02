@@ -1,12 +1,20 @@
 var express = require('express'),
     path = require('path'),
     fs = require('fs'),
-    auth = require('basic-auth');
+    auth = require('basic-auth'),
+    expressJWT = require('express-jwt'),
+    jwt = require('jsonwebtoken');
 
 var UserProvider = require('./UserProvider').UserProvider;
 var userProvider = new UserProvider('localhost', 27017);
 
 var app = express();
+var rootDir = __dirname + '/';
+var staticRoot = express.static(rootDir);
+app.use(staticRoot);
+
+var secret = 'a;sdfgioays8yA:DFa;w4w;eADgaslkfjg8loYASD??:SOEyt';
+app.use(expressJWT({secret: secret}).unless({path: ['/api/login', staticRoot]}));
 
 app.post('/api/login', function(req, res) {
   var credential = auth(req);
@@ -26,7 +34,11 @@ app.post('/api/login', function(req, res) {
           res.statusCode = 401;
           res.end('Username / password not recognized');
         } else {
-          res.end("Access granted");
+          var d = new Date();
+          var seconds = Math.round(d.getTime() / 1000);
+          var expiry = seconds + 14400; //4 hrs from now
+          var token = jwt.sign({username: user, exp: expiry}, secret);
+          res.status(200).json(token);
         }
       }
     });
@@ -39,8 +51,6 @@ app.post('/api/login', function(req, res) {
   }) */
 });
 
-var staticRoot = __dirname + '/';
-app.use(express.static(staticRoot));
 app.use(function(req, res, next) {
     // if the request is not html then move along
     var accept = req.accepts('html', 'json', 'xml');
