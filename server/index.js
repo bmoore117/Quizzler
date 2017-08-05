@@ -3,10 +3,17 @@ var express = require('express'),
     fs = require('fs'),
     auth = require('basic-auth'),
     expressJWT = require('express-jwt'),
-    jwt = require('jsonwebtoken');
+    jwt = require('jsonwebtoken'),
+    mongodb = require('mongodb');
+
+var db = new mongodb.Db('quizzler', new mongodb.Server('localhost', 27017, {auto_reconnect: true}, {}));
+db.open(function(){});
 
 var UserProvider = require('./UserProvider').UserProvider;
-var userProvider = new UserProvider('localhost', 27017);
+var userProvider = new UserProvider(db);
+
+var QuestionProvider = require('./QuestionProvider').QuestionProvider;
+var questionProvider = new QuestionProvider(db);
 
 var app = express();
 var rootDir = __dirname + '/';
@@ -18,6 +25,7 @@ app.use(expressJWT({secret: secret}).unless({path: ['/api/login', staticRoot]}))
 
 app.post('/api/login', function(req, res) {
   var credential = auth(req);
+  console.log("Attempting to authenticate user: " + credential.name);
 
   if(!credential || !credential.name || !credential.pass) {
     res.statusCode = 401;
@@ -43,12 +51,24 @@ app.post('/api/login', function(req, res) {
       }
     });
   }
+});
 
-  /* console.log("Username " + credential.name + " password " + credential.pass);
+app.get('/api/question/:id', function(req, res) {
+  console.log('Fetching question with id: ' + req.params.id);
 
-  userProvider.findAll(function(error, users) {
-    res.send(users);
-  }) */
+  questionProvider.findById(req.params.id, function(error, question) {
+    if(error) {
+      res.statusCode = 500;
+      res.end(error.toString());
+    } else {
+      if(!question) {
+        res.statusCode = 404;
+        res.end("Question not found");
+      } else {
+        res.status(200).json(question);
+      }
+    }
+  })
 });
 
 app.use(function(req, res, next) {
