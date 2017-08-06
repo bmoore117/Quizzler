@@ -15,6 +15,7 @@ import { ResultComponent } from './components/home/result/result.component';
 import { AuthGuard } from './services/auth-guard.service';
 import { AuthService } from './services/auth.service';
 import { AuthHttp } from './services/auth-http.service';
+import { QuestionService } from './services/question.service';
 
 const routes: Routes = [
   { path: 'app', component: AppComponent },
@@ -51,7 +52,7 @@ const routes: Routes = [
     HttpModule,
     RouterModule.forRoot(routes, {enableTracing: true})
   ],
-  providers: [AuthGuard, AuthHttp, AuthService],
+  providers: [AuthGuard, AuthHttp, AuthService, QuestionService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
