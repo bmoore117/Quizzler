@@ -23,6 +23,7 @@ app.use(staticRoot);
 var secret = 'a;sdfgioays8yA:DFa;w4w;eADgaslkfjg8loYASD??:SOEyt';
 app.use(expressJWT({secret: secret}).unless({path: ['/api/login', staticRoot]}));
 
+// TODO implement secure storage of passwords
 app.post('/api/login', function(req, res) {
   var credential = auth(req);
   console.log("Attempting to authenticate user: " + credential.name);
@@ -37,16 +38,22 @@ app.post('/api/login', function(req, res) {
         res.statusCode = 500;
         res.end('Internal error');
       } else {
-        console.log(user);
+         //case where user object not found
         if(!user) {
           res.statusCode = 401;
           res.end('Username / password not recognized');
         } else {
-          var d = new Date();
-          var seconds = Math.round(d.getTime() / 1000);
-          var expiry = seconds + 14400; //4 hrs from now
-          var token = jwt.sign({username: user, exp: expiry}, secret);
-          res.status(200).json(token);
+           //case where user object doesn't match
+          if(user.username !== credential.name || user.password !== credential.pass) {
+            res.statusCode = 401;
+            res.end('Username / password not recognized');
+          } else {
+            var d = new Date();
+            var seconds = Math.round(d.getTime() / 1000);
+            var expiry = seconds + 14400; //4 hrs from now
+            var token = jwt.sign({username: user.username, exp: expiry}, secret);
+            res.status(200).json(token);
+          }
         }
       }
     });

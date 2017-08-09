@@ -1,2 +1,6 @@
-<h1>Now on the home page</h1>
+<nav>
+    <a *ngIf="leftRoute" routerLink="{{leftRoute}}">{{leftText}}</a>
+    <span *ngIf="!leftRoute">{{leftText}}</span>
+    <a routerLink="{{rightRoute}}">{{rightText}}</a>
+</nav>
 <router-outlet></router-outlet>

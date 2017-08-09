@@ -1,16 +1,23 @@
+import 'rxjs/add/operator/map';
+
 import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
-import { Observable } from 'rxjs/Rx';
-import 'rxjs/add/operator/map';
+import { JwtHelper } from 'angular2-jwt';
+import { BehaviorSubject, Observable } from 'rxjs/Rx';
 
 import { AuthHttp } from './auth-http.service';
 
 @Injectable()
 export class AuthService {
 
+  isLoggedIn: BehaviorSubject<boolean>;
   redirectUrl: string;
-
-  constructor(private http: AuthHttp) {}
+  jwtHelper: JwtHelper;
+  
+  constructor(private http: AuthHttp) {
+    this.isLoggedIn = new BehaviorSubject(false);
+    this.jwtHelper = new JwtHelper();
+  }
 
   login(username: String, password: String): Observable<boolean> {
     console.log('doing login');
@@ -22,6 +29,7 @@ export class AuthService {
         if (response.status === 200) {
           const jwt = response.json();
           sessionStorage.setItem('id_token', jwt);
+          this.checkLoggedIn();
           return true;
         } else {
           return false;
@@ -31,5 +39,23 @@ export class AuthService {
 
   logout(): void {
     sessionStorage.removeItem('id_token');
+    this.checkLoggedIn();
+  }
+
+  checkLoggedIn() {
+    var token = sessionStorage.getItem('id_token');
+
+    if(token != undefined) {
+      this.isLoggedIn.next(true);
+      return this.jwtHelper.isTokenExpired(token);
+    } else {
+      this.isLoggedIn.next(false);
+      return false;
+    }
+  }
+
+  getLoggedInUser(): string {
+    var token = this.jwtHelper.decodeToken(sessionStorage.getItem('id_token'));
+    return token.username;
   }
 }

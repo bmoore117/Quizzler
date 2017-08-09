@@ -13,7 +13,7 @@ export class QuestionService {
   fetchQuestion(id: number): Observable<any> {
     return this.http.get('api/question/' + id)
       .map((response: Response) => {
-        return response.json;
+        return response.json();
       });
   }
 }
