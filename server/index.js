@@ -21,7 +21,7 @@ var staticRoot = express.static(rootDir);
 app.use(staticRoot);
 
 var secret = 'a;sdfgioays8yA:DFa;w4w;eADgaslkfjg8loYASD??:SOEyt';
-app.use(expressJWT({secret: secret}).unless({path: ['/api/login', '/*']}));
+app.use('/api', expressJWT({secret: secret}).unless({path: ['/api/login']}));
 
 // TODO implement secure storage of passwords
 app.post('/api/login', function(req, res) {
@@ -78,7 +78,7 @@ app.get('/api/question/:id', function(req, res) {
   })
 });
 
-app.get('/*', function(req, res) {
+app.get('*', function(req, res) {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
