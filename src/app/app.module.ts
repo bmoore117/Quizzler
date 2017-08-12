@@ -20,6 +20,7 @@ const routes: Routes = [
   { path: 'home',
     component: HomeComponent,
     canActivateChild: [AuthGuard],
+    canActivate: [AuthGuard],
     children: [
       { path: 'quiz', component: QuizComponent, canActivate: [AuthGuard]},
       { path: 'result', component: ResultComponent }

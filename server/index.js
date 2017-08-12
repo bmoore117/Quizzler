@@ -21,7 +21,7 @@ var staticRoot = express.static(rootDir);
 app.use(staticRoot);
 
 var secret = 'a;sdfgioays8yA:DFa;w4w;eADgaslkfjg8loYASD??:SOEyt';
-app.use(expressJWT({secret: secret}).unless({path: ['/api/login', staticRoot]}));
+app.use(expressJWT({secret: secret}).unless({path: ['/api/login', '/*']}));
 
 // TODO implement secure storage of passwords
 app.post('/api/login', function(req, res) {
@@ -78,21 +78,14 @@ app.get('/api/question/:id', function(req, res) {
   })
 });
 
-app.use(function(req, res, next) {
-    // if the request is not html then move along
-    var accept = req.accepts('html', 'json', 'xml');
-    console.log("Accepts " + accept);
-    if(accept !== 'html') {
-        return next();
-    }
+app.get('/*', function(req, res) {
+  res.sendFile(path.join(__dirname, 'index.html'));
+});
 
-    // if the request has a '.' assume that it's for a file, move along
-    var ext = path.extname(req.path);
-    console.log("Ext " + ext);
-    if (ext !== '') {
-        return next();
-    }
-    fs.createReadStream(staticRoot + 'index.html').pipe(res);
+app.use(function(req, res, next) {
+    var err = new Error('Not found');
+    err.status = 404;
+    next(err);
 });
 
 app.listen(3000, function() {
