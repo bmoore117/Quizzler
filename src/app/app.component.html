@@ -1,2 +1,8 @@
-<!--The content below is only a placeholder and can be replaced.-->
+<nav>
+    <a *ngIf="leftRoute; else leftElseBlock" routerLink="{{leftRoute}}">{{leftText}}</a>
+    <ng-template #leftElseBlock><span>{{leftText}}</span></ng-template>
+    
+    <a *ngIf="rightRoute; else rightElseBlock" routerLink="{{rightRoute}}">{{rightText}}</a>
+    <ng-template #rightElseBlock><span (click)="logoutClick()" class="link">{{rightText}}</span></ng-template>
+</nav>
 <router-outlet></router-outlet>

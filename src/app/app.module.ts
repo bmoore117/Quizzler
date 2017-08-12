@@ -17,18 +17,12 @@ import { AuthService } from './services/auth.service';
 import { QuestionService } from './services/question.service';
 
 const routes: Routes = [
-  { path: 'app', component: AppComponent },
   { path: 'home',
     component: HomeComponent,
+    canActivateChild: [AuthGuard],
     children: [
-      {
-        path: '',
-        canActivate: [AuthGuard],
-        children: [
-          { path: 'quiz', component: QuizComponent },
-          { path: 'result', component: ResultComponent }
-        ]
-      }
+      { path: 'quiz', component: QuizComponent, canActivate: [AuthGuard]},
+      { path: 'result', component: ResultComponent }
     ]
   },
   { path: 'login', component: LoginComponent },
@@ -50,7 +44,7 @@ const routes: Routes = [
     BrowserAnimationsModule,
     FormsModule,
     HttpModule,
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes, {enableTracing: true})
   ],
   providers: [AuthGuard, AuthHttp, AuthService, QuestionService],
   bootstrap: [AppComponent]
