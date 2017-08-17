@@ -1,9 +1,8 @@
 var express = require('express'),
     path = require('path'),
     fs = require('fs'),
-    auth = require('basic-auth'),
     expressJWT = require('express-jwt'),
-    jwt = require('jsonwebtoken'),
+    jwksRsa = require('jwks-rsa'),
     mongodb = require('mongodb');
 
 var db = new mongodb.Db('quizzler', new mongodb.Server('localhost', 27017, {auto_reconnect: true}, {}));
@@ -20,45 +19,20 @@ var rootDir = __dirname + '/';
 var staticRoot = express.static(rootDir);
 app.use(staticRoot);
 
-var secret = 'a;sdfgioays8yA:DFa;w4w;eADgaslkfjg8loYASD??:SOEyt';
-app.use('/api', expressJWT({secret: secret}).unless({path: ['/api/login']}));
-
-// TODO implement secure storage of passwords
-app.post('/api/login', function(req, res) {
-  var credential = auth(req);
-  console.log("Attempting to authenticate user: " + credential.name);
-
-  if(!credential || !credential.name || !credential.pass) {
-    res.statusCode = 401;
-    res.setHeader('WWW-Authenticate', 'Basic realm="example"');
-    res.end('Access denied');
-  } else {
-    userProvider.findByName(credential.name, function(error, user) {
-      if(error) {
-        res.statusCode = 500;
-        res.end('Internal error');
-      } else {
-         //case where user object not found
-        if(!user) {
-          res.statusCode = 401;
-          res.end('Username / password not recognized');
-        } else {
-           //case where user object doesn't match
-          if(user.username !== credential.name || user.password !== credential.pass) {
-            res.statusCode = 401;
-            res.end('Username / password not recognized');
-          } else {
-            var d = new Date();
-            var seconds = Math.round(d.getTime() / 1000);
-            var expiry = seconds + 14400; //4 hrs from now
-            var token = jwt.sign({username: user.username, exp: expiry}, secret);
-            res.status(200).json(token);
-          }
-        }
-      }
-    });
-  }
+const checkJwt = expressJWT({
+  // Dynamically provide a signing key
+  // based on the kid in the header and
+  // the singing keys provided by the JWKS endpoint.
+  secret: jwksRsa.expressJwtSecret({
+    cache: true,
+    rateLimit: true,
+    jwksRequestsPerMinute: 5,
+    jwksUri: 'https://bmoore.auth0.com/.well-known/jwks.json'
+  }),
+  algorithms: ['RS256']
 });
+
+app.use('/api', checkJwt);
 
 app.get('/api/question/:id', function(req, res) {
   console.log('Fetching question with id: ' + req.params.id);

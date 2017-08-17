@@ -18,7 +18,7 @@ export class AppComponent {
   rightText: string = undefined;
 
   constructor(private authService: AuthService, private router: Router) {
-    authService.isLoggedIn.subscribe((value: boolean) => {
+    /* authService.isLoggedIn.subscribe((value: boolean) => {
       console.log("Hitting subscribe");
       if(!value) {
         console.log('Not value');
@@ -31,11 +31,11 @@ export class AppComponent {
         console.log('value');
         this.leftRoute = undefined;
         this.leftText = 'Hi, ' + authService.getLoggedInUser();
-        
+
         this.rightRoute = undefined;
         this.rightText = 'Logout';
       }
-    })
+    }) */
   }
 
   logoutClick() {

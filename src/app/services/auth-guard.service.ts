@@ -16,13 +16,11 @@ export class AuthGuard implements CanActivate, CanActivateChild {
   }
 
   checkActivation(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-    if (sessionStorage.getItem('id_token')) {
+    if (this.authService.isAuthenticated()) {
       return true;
     }
 
-    this.authService.redirectUrl = state.url;
-
-    this.router.navigate(['login']);
+    this.authService.login();
     return false;
   }
 }

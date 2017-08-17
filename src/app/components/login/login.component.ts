@@ -1,6 +1,5 @@
 import { Component, Injectable } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
-import { Router } from '@angular/router';
 
 @Injectable()
 @Component({
@@ -9,20 +8,7 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent {
 
-  previousUrl: string;
-
-  constructor(private authService: AuthService, private router: Router) {}
-
-  // Bound fields in template
-  username: String = '';
-  password: String = '';
-
-  doLogin(event) {
-    console.log('button pressed');
-    this.authService.login(this.username, this.password).subscribe(success => {
-      if (success) {
-        this.router.navigate([this.authService.redirectUrl]);
-      } // TODO else show incorrect username / password notification
-    });
+  constructor(private authService: AuthService) {
+    authService.handleAuthentication();
   }
 }

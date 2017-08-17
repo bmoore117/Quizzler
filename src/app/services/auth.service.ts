@@ -1,61 +1,75 @@
 import 'rxjs/add/operator/map';
 
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { Response } from '@angular/http';
 import { JwtHelper } from 'angular2-jwt';
 import { BehaviorSubject, Observable } from 'rxjs/Rx';
+
+import Auth0Lock from 'auth0-lock';
 
 import { AuthHttp } from './auth-http.service';
 
 @Injectable()
 export class AuthService {
 
-  isLoggedIn: BehaviorSubject<boolean>;
-  redirectUrl: string;
-  jwtHelper: JwtHelper;
-  
-  constructor(private http: AuthHttp) {
-    this.isLoggedIn = new BehaviorSubject(false);
-    this.jwtHelper = new JwtHelper();
-  }
+  lock: any;
 
-  login(username: String, password: String): Observable<boolean> {
-    console.log('doing login');
-    const token = 'Basic ' + btoa(username + ':' + password);
-
-    return this.http.postWithToken('/api/login', token, undefined)
-      .map((response: Response) => {
-        console.log('checking response');
-        if (response.status === 200) {
-          const jwt = response.json();
-          sessionStorage.setItem('id_token', jwt);
-          this.checkLoggedIn();
-          return true;
-        } else {
-          return false;
+  constructor(private http: AuthHttp, private router: Router) {
+    this.lock = new Auth0Lock('BqmY5UFBAz6oOVFASRW30QeSzQkj0pUj', 'bmoore.auth0.com', {
+      oidcConformant: true,
+      autoClose: true,
+      auth: {
+        redirectUrl: 'http://localhost:3000/callback',
+        responseType: 'token id_token',
+        params: {
+          scope: 'openid' // Learn about scopes: https://auth0.com/docs/scopes
         }
-      });
+      }
+    });
   }
 
-  logout(): void {
-    sessionStorage.removeItem('id_token');
-    this.checkLoggedIn();
+  public handleAuthentication(): void {
+    this.lock.on('authenticated', (authResult) => {
+      if (authResult && authResult.accessToken && authResult.idToken) {
+        this.setSession(authResult);
+        this.router.navigate(['/']);
+      }
+    });
+
+    this.lock.on('authorization_error', (err) => {
+      this.router.navigate(['/']);
+      console.log(err);
+      alert(`Error: ${err.error}. Check the console for further details.`);
+    });
   }
 
-  checkLoggedIn() {
-    var token = sessionStorage.getItem('id_token');
 
-    if(token != undefined) {
-      this.isLoggedIn.next(true);
-      return this.jwtHelper.isTokenExpired(token);
-    } else {
-      this.isLoggedIn.next(false);
-      return false;
-    }
+  public login() {
+    this.lock.show();
   }
 
-  getLoggedInUser(): string {
-    var token = this.jwtHelper.decodeToken(sessionStorage.getItem('id_token'));
-    return token.username;
+  private setSession(authResult): void {
+    // Set the time that the access token will expire at
+    const expiresAt = JSON.stringify((authResult.expiresIn * 1000) + new Date().getTime());
+    localStorage.setItem('access_token', authResult.accessToken);
+    localStorage.setItem('id_token', authResult.idToken);
+    localStorage.setItem('expires_at', expiresAt);
+  }
+
+  public logout(): void {
+    // Remove tokens and expiry time from localStorage
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('id_token');
+    localStorage.removeItem('expires_at');
+    // Go back to the home route
+    this.router.navigate(['/']);
+  }
+
+  public isAuthenticated(): boolean {
+    // Check whether the current time is past the
+    // access token's expiry time
+    const expiresAt = JSON.parse(localStorage.getItem('expires_at'));
+    return new Date().getTime() < expiresAt;
   }
 }
