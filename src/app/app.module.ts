@@ -9,6 +9,7 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
 import { QuizComponent } from './components/home/quiz/quiz.component';
 import { ResultComponent } from './components/home/result/result.component';
+import { LandingComponent } from './components/landing/landing.component';
 import { LoginComponent } from './components/login/login.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { AuthGuard } from './services/auth-guard.service';
@@ -20,14 +21,13 @@ const routes: Routes = [
   { path: 'home',
     component: HomeComponent,
     canActivateChild: [AuthGuard],
-    canActivate: [AuthGuard],
     children: [
       { path: 'quiz', component: QuizComponent, canActivate: [AuthGuard]},
       { path: 'result', component: ResultComponent }
     ]
   },
-  { path: 'callback', component: LoginComponent },
-  { path: '', redirectTo: 'home/quiz', pathMatch: 'full' },
+  { path: 'callback', component: LoginComponent }, // used when auth0 calls back after authentication
+  { path: '', redirectTo: 'landing', pathMatch: 'full' },
   { path: '**', component: NotFoundComponent }
 ];
 
@@ -38,7 +38,8 @@ const routes: Routes = [
     QuizComponent,
     ResultComponent,
     LoginComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    LandingComponent
   ],
   imports: [
     BrowserModule,
