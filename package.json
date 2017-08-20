@@ -9,10 +9,10 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "build:server": "ng build; cp -r server\\* dist",
-    "build:server-prod": "ng build -prod; cp server\\* dist",
-    "serve-build": "npm run build:server; cd dist; node index.js",
-    "serve-build-prod": "npm run build:server-prod; cd dist; node index.js"
+    "build": "ng build; cp -r server\\* dist",
+    "build:prod": "ng build -prod; cp -r server\\* dist",
+    "node-serve": "npm run build; cd dist; node index.js",
+    "node-serve:prod": "npm run build:prod; cd dist; node index.js"
   },
   "private": true,
   "dependencies": {
