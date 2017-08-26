@@ -1,0 +1,20 @@
+div {
+  display: flex;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  overflow: auto;
+  background-image: url('/assets/market.jpg');
+}
+
+md-card {
+  margin: auto;
+}
+
+md-card-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}

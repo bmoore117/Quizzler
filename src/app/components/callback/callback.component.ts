@@ -4,10 +4,9 @@ import { AuthService } from '../../services/auth.service';
 @Injectable()
 @Component({
   selector: 'app-login',
-  templateUrl: './login.component.html'
+  templateUrl: './callback.component.html'
 })
-export class LoginComponent {
-
+export class CallbackComponent {
   constructor(private authService: AuthService) {
     authService.handleAuthentication();
   }

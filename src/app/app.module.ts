@@ -5,12 +5,14 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule, Routes } from '@angular/router';
 
+import { MdButtonModule, MdCardModule } from '@angular/material';
+
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
 import { QuizComponent } from './components/home/quiz/quiz.component';
 import { ResultComponent } from './components/home/result/result.component';
 import { LandingComponent } from './components/landing/landing.component';
-import { LoginComponent } from './components/login/login.component';
+import { CallbackComponent } from './components/callback/callback.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { AuthGuard } from './services/auth-guard.service';
 import { AuthHttp } from './services/auth-http.service';
@@ -26,7 +28,8 @@ const routes: Routes = [
       { path: 'result', component: ResultComponent }
     ]
   },
-  { path: 'callback', component: LoginComponent }, // used when auth0 calls back after authentication
+  { path: 'landing', component: LandingComponent },
+  { path: 'callback', component: CallbackComponent }, // used when auth0 calls back after authentication
   { path: '', redirectTo: 'landing', pathMatch: 'full' },
   { path: '**', component: NotFoundComponent }
 ];
@@ -37,7 +40,7 @@ const routes: Routes = [
     HomeComponent,
     QuizComponent,
     ResultComponent,
-    LoginComponent,
+    CallbackComponent,
     NotFoundComponent,
     LandingComponent
   ],
@@ -46,6 +49,8 @@ const routes: Routes = [
     BrowserAnimationsModule,
     FormsModule,
     HttpModule,
+    MdButtonModule,
+    MdCardModule,
     RouterModule.forRoot(routes, {enableTracing: true})
   ],
   providers: [AuthGuard, AuthHttp, AuthService, QuestionService],
