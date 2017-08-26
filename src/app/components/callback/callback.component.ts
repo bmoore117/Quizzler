@@ -7,7 +7,5 @@ import { AuthService } from '../../services/auth.service';
   templateUrl: './callback.component.html'
 })
 export class CallbackComponent {
-  constructor(private authService: AuthService) {
-    authService.handleAuthentication();
-  }
+  constructor(private authService: AuthService) {}
 }

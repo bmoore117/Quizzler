@@ -15,9 +15,8 @@ export class LandingComponent implements OnInit {
   ngOnInit() {
   }
 
-
   showPopup(isLogin: boolean) {
-    if(isLogin) {
+    if (isLogin) {
       this.authService.setRedirect('home/quiz');
       this.authService.login({initialScreen: 'login'});
     } else {

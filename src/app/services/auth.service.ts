@@ -27,12 +27,11 @@ export class AuthService {
         }
       }
     });
-  }
 
-  public handleAuthentication() {
     this.lock.on('authenticated', (authResult) => {
       if (authResult && authResult.accessToken && authResult.idToken) {
         this.setSession(authResult);
+        this.lock.hide();
         this.router.navigate([this.useRedirect()]);
       }
     });
