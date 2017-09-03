@@ -14,6 +14,7 @@ export class QuizComponent implements OnInit {
 
   model: any;
   questionIdx: number;
+  selection: string;
 
   ngOnInit(): void {
     this.questionIdx = 1;
