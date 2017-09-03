@@ -1,4 +1,6 @@
 import { Component, Injectable, OnInit } from '@angular/core';
+import { MdButtonModule, MdCardModule, MdRadioModule } from '@angular/material';
+
 import { QuestionService } from '../../../services/question.service';
 
 @Component({
@@ -10,12 +12,23 @@ export class QuizComponent implements OnInit {
 
   constructor(private questionService: QuestionService) {}
 
-  model: any = undefined;
+  model: any;
+  questionIdx: number;
 
   ngOnInit(): void {
-    this.questionService.fetchQuestion(1).subscribe(data => {
-      console.log(data);
-      this.model = JSON.stringify(data);
+    this.questionIdx = 1;
+
+    this.questionService.fetchQuestion(this.questionIdx).subscribe(data => {
+      this.model = data;
+    });
+  }
+
+  advance(): void {
+    // TODO: validate fields?
+    this.questionIdx++;
+
+    this.questionService.fetchQuestion(this.questionIdx).subscribe(data => {
+      this.model = data;
     });
   }
 }

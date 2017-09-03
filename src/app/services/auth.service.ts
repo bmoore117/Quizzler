@@ -26,21 +26,23 @@ export class AuthService {
         }
       }
     });
-
-    this.lock.on('authenticated', (authResult) => {
-      if (authResult && authResult.accessToken && authResult.idToken) {
-        this.setSession(authResult);
-        this.lock.hide();
-        this.router.navigate([this.useRedirect()]);
-      }
-    });
   }
 
   public setRedirect(redirect: string) {
     sessionStorage.setItem('redirect', redirect);
   }
 
-  private useRedirect(): string {
+  public handleAuthentication(): void {
+    this.lock.on('authenticated', (authResult) => {
+      if (authResult && authResult.accessToken && authResult.idToken) {
+        this.setSession(authResult);
+        this.lock.hide();
+        this.router.navigate([this.consumeRedirect()]);
+      }
+    });
+  }
+
+  private consumeRedirect(): string {
     let redirect = sessionStorage.getItem('redirect');
     sessionStorage.removeItem('redirect');
     if (redirect === undefined) {

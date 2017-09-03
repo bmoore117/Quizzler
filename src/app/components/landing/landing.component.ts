@@ -1,5 +1,5 @@
 import { Component, OnInit, Injectable } from '@angular/core';
-import {MdButtonModule, MdCardModule} from '@angular/material';
+import { MdButtonModule, MdCardModule } from '@angular/material';
 import { AuthService } from '../../services/auth.service';
 
 @Component({

@@ -5,7 +5,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule, Routes } from '@angular/router';
 
-import { MdButtonModule, MdCardModule } from '@angular/material';
+import { MdButtonModule, MdCardModule, MdRadioModule } from '@angular/material';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
@@ -51,6 +51,7 @@ const routes: Routes = [
     HttpModule,
     MdButtonModule,
     MdCardModule,
+    MdRadioModule,
     RouterModule.forRoot(routes, {enableTracing: true})
   ],
   providers: [AuthGuard, AuthHttp, AuthService, QuestionService],

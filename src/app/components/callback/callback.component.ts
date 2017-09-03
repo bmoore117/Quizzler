@@ -1,4 +1,4 @@
-import { Component, Injectable } from '@angular/core';
+import { Component, Injectable, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 
 @Injectable()
@@ -6,6 +6,10 @@ import { AuthService } from '../../services/auth.service';
   selector: 'app-login',
   templateUrl: './callback.component.html'
 })
-export class CallbackComponent {
+export class CallbackComponent implements OnInit {
   constructor(private authService: AuthService) {}
+
+  ngOnInit(): void {
+    this.authService.handleAuthentication();
+  }
 }
