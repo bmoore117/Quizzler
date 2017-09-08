@@ -4,16 +4,43 @@ import { AuthHttp } from './auth-http.service';
 import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 
-
 @Injectable()
 export class QuestionService {
 
-  constructor(private http: AuthHttp) { }
+  private questionIdx: number;
+  private lastQuestionIdx: number;
+  private answers: number[];
 
-  fetchQuestion(id: number): Observable<any> {
-    return this.http.get('api/question/' + id)
+  constructor(private http: AuthHttp) {
+    this.questionIdx = 0;
+    this.answers = [];
+    this.http.get('api/question/max')
+      .map((response: Response) => {
+        return parseInt(response.text(), 10);
+      }).subscribe(data => this.lastQuestionIdx = data);
+
+  }
+
+  fetchNextQuestion(): Observable<any> {
+    this.questionIdx++;
+    return this.http.get('api/question/' + this.questionIdx)
       .map((response: Response) => {
         return response.json();
       });
+  }
+
+  isOnLastQuestion(): boolean {
+    return this.questionIdx < this.lastQuestionIdx;
+  }
+
+  storeAnswer(answer: number) {
+    this.answers.push(answer);
+  }
+
+  getScore(): Observable<number> {
+    return this.http.get('api/score?' + JSON.stringify(this.answers))
+    .map((response: Response) => {
+      return parseInt(response.text(), 10);
+    });
   }
 }

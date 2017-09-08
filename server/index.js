@@ -34,6 +34,24 @@ const checkJwt = expressJWT({
 
 app.use('/api', checkJwt);
 
+app.get('/api/question/max', function(req, res) {
+  console.log('Fetching max question id');
+
+  questionProvider.findMaxId(function(error, maxId) {
+    if(error) {
+      res.statusCode = 500;
+      res.end(error.toString());
+    } else {
+      if(!maxId) {
+        res.statusCode = 404;
+        res.end("Max id not found"); // collection empty
+      } else {
+        res.status(200).json(maxId);
+      }
+    }
+  })
+});
+
 app.get('/api/question/:id', function(req, res) {
   console.log('Fetching question with id: ' + req.params.id);
 

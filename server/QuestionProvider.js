@@ -16,4 +16,17 @@ QuestionProvider.prototype.findById = function(id, callback) {
   });
 }
 
+QuestionProvider.prototype.findMaxId = function(callback) {
+  this.db.collection('questions', function(error, questions) {
+    if(error) {
+      callback(error);
+    } else {
+      questions.findOne({}, {fields:{_id:1}, sort:{_id:-1}}, function(error, result) {
+        if(error) callback(error);
+        else callback(null, result);
+      });
+    }
+  });
+}
+
 exports.QuestionProvider = QuestionProvider;

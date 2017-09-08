@@ -4,12 +4,12 @@
   </md-card-header>
   <md-card-content>
     <md-radio-group [(ngModel)]="selection">
-      <ng-template ngFor let-answer [ngForOf]="model.answers">
-        <md-radio-button [value]="answer">{{answer}}</md-radio-button>
+      <ng-template ngFor let-answer [ngForOf]="model.answers" let-i="index">
+        <md-radio-button [value]="i">{{answer}}</md-radio-button>
         <br />
         <br />
       </ng-template>
     </md-radio-group>
-    <button md-raised-button (click)="advance()" color="primary" [disabled]="!selection">Next</button>
+    <button md-raised-button (click)="advance()" color="primary" [disabled]="selection == undefined">Next</button>
   </md-card-content>
 </md-card>
