@@ -16,7 +16,7 @@ export class QuestionService {
     this.answers = [];
     this.http.get('api/question/max')
       .map((response: Response) => {
-        return parseInt(response.text(), 10);
+        return response.json()._id;
       }).subscribe(data => this.lastQuestionIdx = data);
 
   }
@@ -30,7 +30,7 @@ export class QuestionService {
   }
 
   isOnLastQuestion(): boolean {
-    return this.questionIdx < this.lastQuestionIdx;
+    return this.questionIdx >= this.lastQuestionIdx;
   }
 
   storeAnswer(answer: number) {
