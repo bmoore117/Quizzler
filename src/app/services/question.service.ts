@@ -4,12 +4,16 @@ import { AuthHttp } from './auth-http.service';
 import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 
+import Answer from '../models/answer';
+import Question from '../models/question';
+import Results from '../models/results';
+
 @Injectable()
 export class QuestionService {
 
   private questionIdx: number;
   private lastQuestionIdx: number;
-  private answers: number[];
+  private answers: Answer[];
 
   constructor(private http: AuthHttp) {
     this.questionIdx = 0;
@@ -21,7 +25,7 @@ export class QuestionService {
 
   }
 
-  fetchNextQuestion(): Observable<any> {
+  fetchNextQuestion(): Observable<Question> {
     this.questionIdx++;
     return this.http.get('api/question/' + this.questionIdx)
       .map((response: Response) => {
@@ -33,14 +37,14 @@ export class QuestionService {
     return this.questionIdx >= this.lastQuestionIdx;
   }
 
-  storeAnswer(answer: number) {
+  storeAnswer(answer: Answer) {
     this.answers.push(answer);
   }
 
-  getScore(): Observable<number> {
-    return this.http.get('api/score?' + JSON.stringify(this.answers))
+  getScore(): Observable<Results> {
+    return this.http.get('api/score?submission=' + JSON.stringify(this.answers))
     .map((response: Response) => {
-      return parseInt(response.text(), 10);
+      return response.json();
     });
   }
 }

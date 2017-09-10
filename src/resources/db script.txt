@@ -2,18 +2,18 @@ db.questions.insert({_id: 1, question: 'Which is not an advantage of using a clo
   answers: ['Prevent pollution of global scope', 'Encapsulation',
       'Private properties and methods', 'Allow conditional use of "strict mode"'
     ],
-  correctAnswer: 0})
+  correctAnswers: [0]})
 
 db.questions.insert({_id: 2, question: 'To create a columned list of two­line email subjects and dates for a master­detail view, which is the most semantically correct?',
     answers: ['<div>+<span>', '<tr>+<td>', '<ul>+<li>', '<p>+<br>', 'none of these', 'all of these'],
-  correctAnswer: 1})
+  correctAnswers: [1]})
 
 db.questions.insert({_id: 3, question: 'To pass an array of strings to a function, you should not use...',
-  answers: ['fn.apply(this, stringsArray)', 'fn.call(this, stringsArray)', 'fn.bind(this, stringsArray)'], correctAnswer: 3})
+  answers: ['fn.apply(this, stringsArray)', 'fn.call(this, stringsArray)', 'fn.bind(this, stringsArray)'], correctAnswers: [2]})
 
 db.questions.insert({_id: 4, question: '____ and ____ would be the HTML tags you would use to display a menu item and its description',
-  answers: ['"blank" and "blank"'], correctAnswer: 0})
+  answers: ['"blank" and "blank"'], correctAnswers: [0]})
 
 db.questions.insert({_id: 5, question: 'Given the following, which message will be returned by injecting this service and executing \'myService.getMessage()\'?',
   code: 'angular.module(\'myModule\', []).service(\'myService\', (function() {\n\tvar message = "Message one!"\n\tvar getMessage = function() {\n\t\treturn this.message\n\t}\n\tthis.message = "Message two!"\n\tthis.getMessage = function() {\n\t\treturn message\n\t}\n\treturn function() {\n\t\treturn {\n\t\t\tgetMessage: getMessage,\n\t\t\tmessage: "Message three!"\n\t\t}\n\t}\n})())',
-  answers: ['1', '2', '3'], correctAnswer: 0})
+  answers: ['1', '2', '3'], correctAnswers: [0]})

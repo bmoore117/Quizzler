@@ -70,6 +70,45 @@ app.get('/api/question/:id', function(req, res) {
   })
 });
 
+app.get('/api/score', function(req, res) {
+  console.log('Calculating final score');
+
+  questionProvider.findAll(function(error, questions) {
+    if(error) {
+      res.statusCode = 500;
+      res.end(error.toString());
+    } else {
+      if(!questions || questions.length == 0) {
+        res.statusCode = 404;
+        res.end("No questions found; database empty");
+      } else {
+        console.log(questions);
+        var submission = JSON.parse(req.query.submission);
+        var result = {totalCorrect: 0, incorrect:[]};
+
+        for (var i = 0; i < submission.length; i++) {
+          var answer = submission[i];
+          var correct = true;
+
+          for(var j = 0; j < answer.answers.length; j++) {
+            if(answer.answers[j] !== questions[i].correctAnswers[j]) {
+              correct = false;
+              break;
+            }
+          }
+
+          if(correct) {
+            result.totalCorrect++;
+          } else {
+            result.incorrect.push({selected: answer.answers, question: questions[i]});
+          }
+        }
+        res.status(200).json(result);
+      }
+    }
+  });
+});
+
 app.get('*', function(req, res) {
   res.sendFile(path.join(__dirname, 'index.html'));
 });

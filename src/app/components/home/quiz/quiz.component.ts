@@ -30,7 +30,7 @@ export class QuizComponent implements OnInit {
   }
 
   advance(): void {
-    this.questionService.storeAnswer(+this.selection);
+    this.questionService.storeAnswer({_id: this.model._id, answers: [+this.selection]});
 
     if (this.questionService.isOnLastQuestion()) {
       this.router.navigate(['/home/result']);
