@@ -1,11 +1,11 @@
 import Question from './question';
 
-export interface Results {
+export default interface Results {
   score: number;
   incorrect: Result[];
 }
 
-export default interface Result {
+export interface Result {
   selected: any[];
-  question: Question[];
+  question: Question;
 }

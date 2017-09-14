@@ -2,6 +2,7 @@ import { Component, Injectable, OnInit } from '@angular/core';
 import { QuestionService } from '../../../services/question.service';
 
 import Results from '../../../models/results';
+import Question from '../../../models/question';
 
 @Component({
   selector: 'app-result',
@@ -14,6 +15,12 @@ export class ResultComponent implements OnInit {
   constructor(private questionService: QuestionService) {}
 
   ngOnInit(): void {
-    this.questionService.getScore().subscribe(data => this.results = data);
+    this.results = {
+      score: undefined,
+      incorrect: []
+    };
+    this.questionService.getScore().subscribe(data => {
+      this.results = data;
+    });
   }
 }

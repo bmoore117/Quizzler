@@ -8,9 +8,6 @@ var express = require('express'),
 var db = new mongodb.Db('quizzler', new mongodb.Server('localhost', 27017, {auto_reconnect: true}, {}));
 db.open(function(){});
 
-var UserProvider = require('./UserProvider').UserProvider;
-var userProvider = new UserProvider(db);
-
 var QuestionProvider = require('./QuestionProvider').QuestionProvider;
 var questionProvider = new QuestionProvider(db);
 
@@ -84,7 +81,8 @@ app.get('/api/score', function(req, res) {
       } else {
         console.log(questions);
         var submission = JSON.parse(req.query.submission);
-        var result = {totalCorrect: 0, incorrect:[]};
+        var result = {score: 0, incorrect:[]};
+        var totalCorrect = 0;
 
         for (var i = 0; i < submission.length; i++) {
           var answer = submission[i];
@@ -98,11 +96,13 @@ app.get('/api/score', function(req, res) {
           }
 
           if(correct) {
-            result.totalCorrect++;
+            totalCorrect++;
           } else {
             result.incorrect.push({selected: answer.answers, question: questions[i]});
           }
         }
+
+        result.score = totalCorrect / questions.length;
         res.status(200).json(result);
       }
     }

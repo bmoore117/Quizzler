@@ -1,2 +1,20 @@
 <h2>Result component</h2>
-{{results}}
+<md-card *ngFor="let item of results.incorrect">
+  <md-card-header>
+    <md-card-title>{{item.question.question}}</md-card-title>
+  </md-card-header>
+  <md-card-content>
+    <p>You answered incorrectly:</p>
+    <ng-template ngFor let-i [ngForOf]="item.selected">
+      <span>{{item.question.answers[i]}}</span>
+      <br />
+      <br />
+    </ng-template>
+    <p>The correct answer(s) were:</p>
+    <ng-template ngFor let-i [ngForOf]="item.question.correctAnswers">
+      <span>{{item.question.answers[i]}}</span>
+      <br />
+      <br />
+    </ng-template>
+  </md-card-content>
+</md-card>
