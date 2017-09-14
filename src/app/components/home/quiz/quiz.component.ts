@@ -1,6 +1,4 @@
 import { Component, Injectable, OnInit } from '@angular/core';
-import { Location } from '@angular/common';
-import { MdButtonModule, MdCardModule, MdRadioModule } from '@angular/material';
 import { Router } from '@angular/router';
 
 import { QuestionService } from '../../../services/question.service';
@@ -14,13 +12,9 @@ export class QuizComponent implements OnInit {
 
   model: any;
   selection: string;
-  currentRoute: string;
 
-  constructor(private questionService: QuestionService, private router: Router, private location: Location) {
+  constructor(private questionService: QuestionService, private router: Router) {
     this.model = {answers: []};
-    router.events.subscribe((val) => {
-      this.currentRoute = location.path();
-    });
   }
 
   ngOnInit(): void {

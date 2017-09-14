@@ -1,5 +1,5 @@
-import { Component, OnInit, Injectable } from '@angular/core';
-import { MdButtonModule, MdCardModule } from '@angular/material';
+import { Component, Injectable, OnInit } from '@angular/core';
+
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -12,8 +12,7 @@ export class LandingComponent implements OnInit {
 
   constructor(private authService: AuthService) { }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   showPopup(isLogin: boolean) {
     if (isLogin) {

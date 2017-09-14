@@ -1,12 +1,13 @@
+import 'rxjs/add/operator/map';
+
 import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
-import { AuthHttp } from './auth-http.service';
 import { Observable } from 'rxjs/Rx';
-import 'rxjs/add/operator/map';
 
 import Answer from '../models/answer';
 import Question from '../models/question';
 import Results from '../models/results';
+import { AuthHttp } from './auth-http.service';
 
 @Injectable()
 export class QuestionService {

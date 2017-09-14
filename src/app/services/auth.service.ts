@@ -2,10 +2,6 @@ import 'rxjs/add/operator/map';
 
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Response } from '@angular/http';
-import { JwtHelper } from 'angular2-jwt';
-import { BehaviorSubject, Observable } from 'rxjs/Rx';
-
 import Auth0Lock from 'auth0-lock';
 
 import { AuthHttp } from './auth-http.service';
