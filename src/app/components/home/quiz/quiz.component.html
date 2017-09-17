@@ -5,11 +5,7 @@
   <md-card-content>
     <pre *ngIf="model.code">{{model.code}}</pre>
     <md-radio-group [(ngModel)]="selection">
-      <ng-template ngFor let-answer [ngForOf]="model.answers" let-i="index">
-        <md-radio-button [value]="i">{{answer}}</md-radio-button>
-        <br />
-        <br />
-      </ng-template>
+      <md-radio-button *ngFor="let answer of model.answers; let i=index" [value]="i">{{answer}}</md-radio-button>
     </md-radio-group>
     <button md-raised-button (click)="advance()" color="primary" [disabled]="selection == undefined">Next</button>
   </md-card-content>

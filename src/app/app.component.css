@@ -6,8 +6,10 @@
   left: 0;
   top: 0;
   overflow: auto;
+  background-color: lightslategray;
 }
 
 #content {
   margin: auto;
+  width: 75%;
 }

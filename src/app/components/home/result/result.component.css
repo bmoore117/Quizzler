@@ -4,3 +4,13 @@ h3 {
   background-color: cornflowerblue;
   color: white;
 }
+
+md-card {
+  margin-bottom: 40px;
+}
+
+md-card-content {
+  background-color: mistyrose;
+  border-radius: 10px;
+  padding: 10px;
+}

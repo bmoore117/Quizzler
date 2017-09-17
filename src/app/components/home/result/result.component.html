@@ -5,16 +5,12 @@
   </md-card-header>
   <md-card-content>
     <p>You answered incorrectly:</p>
-    <ng-template ngFor let-i [ngForOf]="item.selected">
-      <span>{{item.question.answers[i]}}</span>
-      <br />
-      <br />
-    </ng-template>
+    <ul>
+      <li *ngFor="let i of item.selected">{{item.question.answers[i]}}</li>
+    </ul>
     <p>The correct answer(s) were:</p>
-    <ng-template ngFor let-i [ngForOf]="item.question.correctAnswers">
-      <span>{{item.question.answers[i]}}</span>
-      <br />
-      <br />
-    </ng-template>
+    <ul>
+      <li *ngFor="let i of item.question.correctAnswers">{{item.question.answers[i]}}</li>
+    </ul>
   </md-card-content>
 </md-card>

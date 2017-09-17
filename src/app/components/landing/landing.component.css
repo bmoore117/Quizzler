@@ -6,7 +6,6 @@ div {
   left: 0;
   top: 0;
   overflow: auto;
-  background-image: url('/assets/market.jpg');
 }
 
 md-card {

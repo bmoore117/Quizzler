@@ -1,4 +1,4 @@
-export default interface Question {
+export default class Question {
   _id: number;
   question: string;
   answers: string[];

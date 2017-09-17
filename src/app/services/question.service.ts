@@ -17,7 +17,7 @@ export class QuestionService {
   private answers: Answer[];
 
   constructor(private http: AuthHttp) {
-    this.questionIdx = 0;
+    this.questionIdx = 1;
     this.answers = [];
     this.http.get('api/question/max')
       .map((response: Response) => {
@@ -27,7 +27,6 @@ export class QuestionService {
   }
 
   fetchNextQuestion(): Observable<Question> {
-    this.questionIdx++;
     return this.http.get('api/question/' + this.questionIdx)
       .map((response: Response) => {
         return response.json();
@@ -39,6 +38,7 @@ export class QuestionService {
   }
 
   storeAnswer(answer: Answer) {
+    this.questionIdx++;
     this.answers.push(answer);
   }
 

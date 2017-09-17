@@ -1,4 +1,3 @@
-export default interface Answer {
-  _id: number;
-  answers: any[];
+export default class Answer {
+  constructor(public _id: number, public answers: any[]) {}
 }
