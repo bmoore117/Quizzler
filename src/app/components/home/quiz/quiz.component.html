@@ -1,8 +1,7 @@
 <md-card>
-  <md-card-header>
-    <md-card-title>{{model.question}}</md-card-title>
-  </md-card-header>
   <md-card-content>
+    <h3>{{model.question}}</h3>
+    <hr />
     <pre *ngIf="model.code">{{model.code}}</pre>
     <md-radio-group [(ngModel)]="selection">
       <md-radio-button *ngFor="let answer of model.answers; let i=index" [value]="i">{{answer}}</md-radio-button>

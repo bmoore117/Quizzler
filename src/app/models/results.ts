@@ -6,6 +6,7 @@ export default class Results {
 }
 
 class Result {
+  isCorrect: boolean;
   selected: any[];
   question: Question;
 }

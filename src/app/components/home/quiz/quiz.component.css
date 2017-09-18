@@ -4,5 +4,9 @@ md-card {
 
 md-radio-button {
   display: block;
-  padding-bottom: 20px;
+  margin-bottom: 20px;
+}
+
+hr {
+  margin-bottom: 17px;
 }

@@ -81,7 +81,7 @@ app.get('/api/score', function(req, res) {
       } else {
         console.log(questions);
         var submission = JSON.parse(req.query.submission);
-        var result = {score: 0, incorrect:[]};
+        var result = {score: 0, review:[]};
         var totalCorrect = 0;
 
         for (var i = 0; i < submission.length; i++) {
@@ -97,12 +97,12 @@ app.get('/api/score', function(req, res) {
 
           if(correct) {
             totalCorrect++;
-          } else {
-            result.incorrect.push({selected: answer.answers, question: questions[i]});
           }
+
+          result.review.push({isCorrect: correct, selected: answer.answers, question: questions[i]});
         }
 
-        result.score = totalCorrect / questions.length;
+        result.score = (totalCorrect / questions.length) * 100;
         res.status(200).json(result);
       }
     }

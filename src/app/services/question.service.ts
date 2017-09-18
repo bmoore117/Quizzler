@@ -34,7 +34,7 @@ export class QuestionService {
   }
 
   isOnLastQuestion(): boolean {
-    return this.questionIdx >= this.lastQuestionIdx;
+    return this.questionIdx > this.lastQuestionIdx;
   }
 
   storeAnswer(answer: Answer) {
