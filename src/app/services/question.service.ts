@@ -2,7 +2,7 @@ import 'rxjs/add/operator/map';
 
 import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
-import { Observable } from 'rxjs/Rx';
+import { BehaviorSubject, Observable } from 'rxjs/Rx';
 
 import Answer from '../models/answer';
 import Question from '../models/question';
@@ -12,33 +12,33 @@ import { AuthHttp } from './auth-http.service';
 @Injectable()
 export class QuestionService {
 
-  private questionIdx: number;
-  private lastQuestionIdx: number;
+  questionIdx: BehaviorSubject<number>;
+  maxQuestionId: BehaviorSubject<number>;
   private answers: Answer[];
 
   constructor(private http: AuthHttp) {
-    this.questionIdx = 1;
+    this.questionIdx = new BehaviorSubject(1);
+    this.maxQuestionId = new BehaviorSubject(1); // default init val
     this.answers = [];
     this.http.get('api/question/max')
       .map((response: Response) => {
         return response.json()._id;
-      }).subscribe(data => this.lastQuestionIdx = data);
-
+      }).subscribe(data => this.maxQuestionId.next(data));
   }
 
   fetchNextQuestion(): Observable<Question> {
-    return this.http.get('api/question/' + this.questionIdx)
+    return this.http.get('api/question/' + this.questionIdx.getValue())
       .map((response: Response) => {
         return response.json();
       });
   }
 
   isOnLastQuestion(): boolean {
-    return this.questionIdx > this.lastQuestionIdx;
+    return this.questionIdx.getValue() > this.maxQuestionId.getValue();
   }
 
   storeAnswer(answer: Answer) {
-    this.questionIdx++;
+    this.questionIdx.next(this.questionIdx.getValue() + 1);
     this.answers.push(answer);
   }
 

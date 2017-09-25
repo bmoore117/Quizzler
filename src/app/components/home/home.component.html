@@ -1,2 +1,4 @@
-<h1>sidenav n stuff could go here</h1>
+<ul>
+  <li *ngFor="let i of numQuestions" [ngClass]="{active: i == currentQuestion}"></li>
+</ul>
 <router-outlet></router-outlet>
