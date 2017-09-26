@@ -45,6 +45,7 @@ export class QuestionService {
   getScore(): Observable<Results> {
     return this.http.get('api/score?submission=' + JSON.stringify(this.answers))
     .map((response: Response) => {
+      this.questionIdx.next(-1);
       return response.json();
     });
   }
