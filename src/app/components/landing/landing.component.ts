@@ -21,10 +21,10 @@ export class LandingComponent implements OnInit {
 
   showPopup(isLogin: boolean) {
     if (isLogin) {
-      this.authService.setRedirect('home/quiz');
+      sessionStorage.setItem('redirect', 'home/quiz');
       this.authService.login({initialScreen: 'login'});
     } else {
-      this.authService.setRedirect('home/quiz');
+      sessionStorage.setItem('redirect', 'home/quiz');
       this.authService.login({initialScreen: 'signUp'});
     }
   }

@@ -24,41 +24,28 @@ export class AuthService {
     });
   }
 
-  public setRedirect(redirect: string) {
-    sessionStorage.setItem('redirect', redirect);
-  }
-
-  public handleAuthentication(): void {
+  handleAuthentication(): void {
     this.lock.on('authenticated', (authResult) => {
       if (authResult && authResult.accessToken && authResult.idToken) {
         this.setSession(authResult);
         this.lock.hide();
-        this.router.navigate([this.consumeRedirect()]);
+        const redirect = sessionStorage.getItem('redirect');
+        this.router.navigate([redirect]);
       }
     });
   }
 
-  private consumeRedirect(): string {
-    let redirect = sessionStorage.getItem('redirect');
-    sessionStorage.removeItem('redirect');
-    if (redirect === undefined) {
-      redirect = '/';
-    }
-
-    return redirect;
-  }
-
-  public login(options: any) {
+  login(options: any) {
     this.lock.show(options);
   }
 
-  private setSession(authResult): void {
+  setSession(authResult): void {
     localStorage.setItem('access_token', authResult.accessToken);
     localStorage.setItem('id_token', authResult.idToken);
     localStorage.setItem('exp', (authResult.idTokenPayload.exp as number * 1000).toString());
   }
 
-  public logout(): void {
+  logout(): void {
     // Remove tokens and expiry time from localStorage
     localStorage.removeItem('access_token');
     localStorage.removeItem('id_token');
@@ -67,7 +54,7 @@ export class AuthService {
     this.router.navigate(['/']);
   }
 
-  public isAuthenticated(): boolean {
+  isAuthenticated(): boolean {
     // Check whether the current time is past the
     // access token's expiry time
     const expiresAt = +localStorage.getItem('exp');
