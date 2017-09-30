@@ -8,8 +8,32 @@ div {
   overflow: auto;
 }
 
+.logo {
+  font-family: Roboto,"Helvetica Neue",sans-serif;
+  font-size: 8em;
+  font-weight: normal;
+  color: #673ab7;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.subtext {
+  font-family: Roboto,"Helvetica Neue",sans-serif;
+  font-size: 2em;
+  font-weight: normal;
+  font-style: italic;
+  color: #ffd740;
+
+  position: absolute;
+  top: 1em;
+  left: 0;
+}
+
 md-card {
   margin: auto;
+  width: 20vw;
 }
 
 md-card-content {

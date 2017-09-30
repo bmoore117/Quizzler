@@ -6,7 +6,7 @@
   left: 0;
   top: 0;
   overflow: auto;
-  background-color: lightslategray;
+  background-image: url('/assets/cubes.png');
 }
 
 #content {
