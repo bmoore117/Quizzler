@@ -24,7 +24,7 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     canActivateChild: [AuthGuard],
     children: [
-      { path: 'quiz', component: QuizComponent, canActivate: [AuthGuard]},
+      { path: 'quiz/:id', component: QuizComponent, canActivate: [AuthGuard]},
       { path: 'result', component: ResultComponent }
     ]
   },

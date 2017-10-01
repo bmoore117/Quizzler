@@ -19,15 +19,17 @@ export class QuestionService {
   constructor(private http: AuthHttp) {
     this.questionIdx = new BehaviorSubject(1);
     this.maxQuestionId = new BehaviorSubject(1); // default init val
-    this.answers = [];
     this.http.get('api/question/max')
       .map((response: Response) => {
         return response.json()._id;
-      }).subscribe(data => this.maxQuestionId.next(data));
+      }).subscribe(data => {
+        this.maxQuestionId.next(data);
+        this.answers = new Array(5);
+      });
   }
 
-  fetchNextQuestion(): Observable<Question> {
-    return this.http.get('api/question/' + this.questionIdx.getValue())
+  fetchQuestion(idx: number): Observable<Question> {
+    return this.http.get('api/question/' + idx)
       .map((response: Response) => {
         return response.json();
       });
@@ -38,8 +40,8 @@ export class QuestionService {
   }
 
   storeAnswer(answer: Answer) {
-    this.questionIdx.next(this.questionIdx.getValue() + 1);
-    this.answers.push(answer);
+    this.questionIdx.next(answer._id + 1);
+    this.answers[answer._id - 1] = answer;
   }
 
   getScore(): Observable<Results> {
