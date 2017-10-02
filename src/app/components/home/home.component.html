@@ -1,4 +1,4 @@
-<ul *ngIf="currentQuestion != -1">
+<ul *ngIf="displayProgress">
   <li *ngFor="let i of numQuestions" [ngClass]="{active: i == currentQuestion}"></li>
 </ul>
 <router-outlet></router-outlet>

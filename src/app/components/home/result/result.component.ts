@@ -19,6 +19,7 @@ export class ResultComponent implements OnInit {
     this.results = new Results();
     this.questionService.getScore().subscribe(data => {
       this.results = data;
+      this.questionService.reset();
     });
   }
 

@@ -20,11 +20,17 @@ export class QuizComponent implements OnInit {
   constructor(private questionService: QuestionService, private router: Router,
     private route: ActivatedRoute) {
     this.model = new Question();
+    this.questionService.quizActive.next(true);
   }
 
   ngOnInit(): void {
     this.route.params.subscribe((params: ParamMap) => {
       const id = +params['id'];
+
+      if (id > 1 && this.questionService.isOnFirstQuestion()) {
+        this.router.navigate(['home/quiz/1']);
+      }
+
       this.questionService.fetchQuestion(id).subscribe(data => {
         this.model = data;
       });
@@ -37,7 +43,6 @@ export class QuizComponent implements OnInit {
     this.selection = undefined;
 
     if (this.questionService.isOnLastQuestion()) {
-      this.questionService.questionIdx.next(1);
       this.router.navigate(['/home/result']);
     } else {
       const nextQuestion = this.model._id + 1;

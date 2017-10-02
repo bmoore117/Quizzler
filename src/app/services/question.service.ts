@@ -14,11 +14,13 @@ export class QuestionService {
 
   questionIdx: BehaviorSubject<number>;
   maxQuestionId: BehaviorSubject<number>;
+  quizActive: BehaviorSubject<boolean>;
   private answers: Answer[];
 
   constructor(private http: AuthHttp) {
     this.questionIdx = new BehaviorSubject(1);
     this.maxQuestionId = new BehaviorSubject(1); // default init val
+    this.quizActive = new BehaviorSubject(false);
     this.answers = [];
     this.http.get('api/question/max')
       .map((response: Response) => {
@@ -38,6 +40,10 @@ export class QuestionService {
 
   isOnLastQuestion(): boolean {
     return this.questionIdx.getValue() > this.maxQuestionId.getValue();
+  }
+
+  isOnFirstQuestion(): boolean {
+    return this.questionIdx.getValue() === 1 && this.answers.length === 0;
   }
 
   storeAnswer(answer: Answer) {
@@ -64,5 +70,11 @@ export class QuestionService {
     .map((response: Response) => {
       return response.json();
     });
+  }
+
+  reset(): void {
+    this.answers = [];
+    this.questionIdx.next(1);
+    this.quizActive.next(false);
   }
 }

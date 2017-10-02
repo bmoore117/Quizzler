@@ -11,6 +11,7 @@ export class HomeComponent {
 
   numQuestions: number[];
   currentQuestion: number;
+  displayProgress: boolean;
 
   constructor(private questionService: QuestionService) {
     questionService.maxQuestionId.subscribe(val => {
@@ -23,6 +24,9 @@ export class HomeComponent {
     });
     questionService.questionIdx.subscribe(val => {
       this.currentQuestion = val;
+    });
+    questionService.quizActive.subscribe(val => {
+      this.displayProgress = val;
     });
   }
 }
