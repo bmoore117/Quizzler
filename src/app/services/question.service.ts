@@ -58,6 +58,10 @@ export class QuestionService {
     if (idx < this.answers.length) {
       const answer = this.answers[idx];
       if (answer !== undefined) {
+        // TO-DO: question answer system has been designed to potentially allow
+        // for multiple answers for a question, e.g. a form with checkboxes.
+        // but the only thing implemented is single-answer multiple choice,
+        // and here the multi-answer paradigm collapses when we do answers[0]
         result = answer.answers[0];
       }
     }
