@@ -23,10 +23,12 @@ export class QuizComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.route.paramMap.switchMap((params: ParamMap) =>
-      this.questionService.fetchQuestion(+params.get('id')))
-    .subscribe(data => {
-      this.model = data;
+    this.route.params.subscribe((params: ParamMap) => {
+      const id = +params['id'];
+      this.questionService.fetchQuestion(id).subscribe(data => {
+        this.model = data;
+      });
+      this.selection = this.questionService.getAnswer(id);
     });
   }
 
@@ -35,6 +37,7 @@ export class QuizComponent implements OnInit {
     this.selection = undefined;
 
     if (this.questionService.isOnLastQuestion()) {
+      this.questionService.questionIdx.next(1);
       this.router.navigate(['/home/result']);
     } else {
       const nextQuestion = this.model._id + 1;

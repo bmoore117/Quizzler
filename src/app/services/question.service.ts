@@ -19,6 +19,7 @@ export class QuestionService {
   constructor(private http: AuthHttp) {
     this.questionIdx = new BehaviorSubject(1);
     this.maxQuestionId = new BehaviorSubject(1); // default init val
+    this.answers = [];
     this.http.get('api/question/max')
       .map((response: Response) => {
         return response.json()._id;
@@ -44,10 +45,23 @@ export class QuestionService {
     this.answers[answer._id - 1] = answer;
   }
 
+  getAnswer(idx: number): string {
+    idx--; // switch to 0-based for array indices
+    let result: string;
+
+    if (idx < this.answers.length) {
+      const answer = this.answers[idx];
+      if (answer !== undefined) {
+        result = answer.answers[0];
+      }
+    }
+
+    return result;
+  }
+
   getScore(): Observable<Results> {
     return this.http.get('api/score?submission=' + JSON.stringify(this.answers))
     .map((response: Response) => {
-      this.questionIdx.next(-1);
       return response.json();
     });
   }
