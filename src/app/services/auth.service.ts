@@ -45,6 +45,7 @@ export class AuthService {
   setSession(authResult): void {
     this.access_token = authResult.accessToken;
     this.id_token = authResult.idToken;
+    this.http.credential = authResult.idToken;
     this.exp = authResult.idTokenPayload.exp as number * 1000;
   }
 
@@ -52,6 +53,7 @@ export class AuthService {
     this.access_token = undefined;
     this.id_token = undefined;
     this.exp = undefined;
+    this.http.credential = undefined;
     this.router.navigate(['/']);
   }
 

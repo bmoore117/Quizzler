@@ -1,16 +1,17 @@
 import { Injectable } from '@angular/core';
 import { Headers, Http } from '@angular/http';
 
+import { AuthService } from './auth.service';
+
 @Injectable()
 export class AuthHttp {
 
   constructor(private http: Http) {}
 
+  credential: string;
+
   createAuthHeader(headers: Headers) {
-    const credential = localStorage.getItem('id_token');
-    if (credential) {
-      headers.append('Authorization', 'Bearer ' + credential);
-    } // TODO else kick out to login
+    headers.append('Authorization', 'Bearer ' + this.credential);
   }
 
   get(url) {
@@ -24,14 +25,6 @@ export class AuthHttp {
   post(url, data) {
     const headers = new Headers();
     this.createAuthHeader(headers);
-    return this.http.post(url, data, {
-      headers: headers
-    });
-  }
-
-  postWithToken(url, token, data) {
-    const headers = new Headers();
-    headers.append('Authorization', token);
     return this.http.post(url, data, {
       headers: headers
     });
