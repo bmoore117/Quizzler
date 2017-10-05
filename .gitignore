@@ -44,3 +44,4 @@ Thumbs.db
 ##########################
 # User defined here
 server/node_modules/
+.npmrc
