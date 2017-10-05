@@ -11,7 +11,7 @@
     "e2e": "ng e2e",
     "build:prod": "ng build -prod; cp -r server\\* dist",
     "node-serve": "npm run build; cd dist; node index.js",
-    "node-serve:prod": "npm run build:prod; cd dist; node index.js"
+    "node-serve:prod": "mkdir -p dist; npm run build; cd dist; node index.js"
   },
   "private": true,
   "dependencies": {
