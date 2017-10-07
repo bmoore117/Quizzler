@@ -124,7 +124,7 @@ MongoClient.connect(url, function (err, db) {
     next(err);
   });
 
-  var port = +process.env.NODE_PORT
+  var port = +process.env.PORT
   app.listen(port, function () {
     console.log('app running on port', port);
   });
