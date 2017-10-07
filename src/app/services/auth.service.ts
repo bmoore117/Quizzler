@@ -15,10 +15,17 @@ export class AuthService {
   exp: number;
 
   constructor(private http: AuthHttp, private router: Router) {
+
+    let callbackUrl = window.location.protocol + '//' + window.location.hostname;
+    if (window.location.port !== '0' ) {
+      callbackUrl = callbackUrl + ':' + window.location.port;
+    }
+    callbackUrl = callbackUrl + '/callback';
+
     this.lock = new Auth0Lock('BqmY5UFBAz6oOVFASRW30QeSzQkj0pUj', 'bmoore.auth0.com', {
       autoClose: true,
       auth: {
-        redirectUrl: window.location.protocol + '//' + window.location.hostname + ':' + window.location.port + '/callback',
+        redirectUrl: callbackUrl,
         responseType: 'token id_token',
         params: {
           scope: 'openid' // Learn about scopes: https://auth0.com/docs/scopes
