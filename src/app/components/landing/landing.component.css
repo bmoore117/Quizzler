@@ -31,12 +31,12 @@ div {
   left: 0;
 }
 
-md-card {
+mat-card {
   margin: auto;
   width: 15em;
 }
 
-md-card-content {
+mat-card-content {
   display: flex;
   align-items: center;
   justify-content: space-around;

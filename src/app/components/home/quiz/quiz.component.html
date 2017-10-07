@@ -1,11 +1,11 @@
-<md-card>
-  <md-card-content>
+<mat-card>
+  <mat-card-content>
     <h3>{{model._id}}. {{model.question}}</h3>
     <hr />
     <pre *ngIf="model.code">{{model.code}}</pre>
-    <md-radio-group [(ngModel)]="selection">
-      <md-radio-button *ngFor="let answer of model.answers; let i=index" [value]="i">{{answer}}</md-radio-button>
-    </md-radio-group>
-    <button md-raised-button (click)="advance()" color="primary" [disabled]="selection == undefined">Next</button>
-  </md-card-content>
-</md-card>
+    <mat-radio-group [(ngModel)]="selection">
+      <mat-radio-button *ngFor="let answer of model.answers; let i=index" [value]="i">{{answer}}</mat-radio-button>
+    </mat-radio-group>
+    <button mat-raised-button (click)="advance()" color="primary" [disabled]="selection == undefined">Next</button>
+  </mat-card-content>
+</mat-card>
