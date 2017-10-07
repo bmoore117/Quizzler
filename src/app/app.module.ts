@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-import { MdButtonModule, MdCardModule, MdRadioModule } from '@angular/material';
+import { MatButtonModule, MatCardModule, MatRadioModule } from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule, Routes } from '@angular/router';
@@ -49,9 +49,9 @@ const routes: Routes = [
     BrowserAnimationsModule,
     FormsModule,
     HttpModule,
-    MdButtonModule,
-    MdCardModule,
-    MdRadioModule,
+    MatButtonModule,
+    MatCardModule,
+    MatRadioModule,
     RouterModule.forRoot(routes, {enableTracing: true})
   ],
   providers: [AuthGuard, AuthHttp, AuthService, QuestionService],
