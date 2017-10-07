@@ -17,7 +17,7 @@ export class AuthService {
   constructor(private http: AuthHttp, private router: Router) {
 
     let callbackUrl = window.location.protocol + '//' + window.location.hostname;
-    if (window.location.port !== '0' ) {
+    if (window.location.port !== '0' && window.location.port !== '') {
       callbackUrl = callbackUrl + ':' + window.location.port;
     }
     callbackUrl = callbackUrl + '/callback';
