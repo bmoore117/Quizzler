@@ -37,7 +37,7 @@ MongoClient.connect(url, function (err, db) {
   app.use('/api', checkJwt);
 
   app.get('/api/question/max', function (req, res) {
-    console.log('Fetching max question id');
+    console.log('Fetching max question id...');
 
     questionProvider.findMaxId(function (error, maxId) {
       if (error) {
@@ -48,6 +48,7 @@ MongoClient.connect(url, function (err, db) {
           res.statusCode = 404;
           res.end("Max id not found"); // collection empty
         } else {
+          console.log('Max id is ' + maxId._id);
           res.status(200).json(maxId);
         }
       }
@@ -107,7 +108,7 @@ MongoClient.connect(url, function (err, db) {
             result.review.push({ isCorrect: correct, selected: answer.answers, question: questions[i] });
           }
 
-          result.score = (totalCorrect / questions.length) * 100;
+          result.score = Math.trunc((totalCorrect / questions.length) * 100);
           res.status(200).json(result);
         }
       }

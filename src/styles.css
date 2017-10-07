@@ -2,5 +2,6 @@
 @import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
 
 html {
-  font-family: Roboto,"Helvetica Neue",sans-serif
+  font-family: Roboto,"Helvetica Neue",sans-serif;
+  background-image: url('/assets/cubes.png');
 }
