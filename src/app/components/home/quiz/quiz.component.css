@@ -3,6 +3,10 @@ mat-radio-button {
   margin-bottom: 1em;
 }
 
+pre {
+  white-space: pre-wrap;
+}
+
 hr {
   margin-bottom: 1em;
 }

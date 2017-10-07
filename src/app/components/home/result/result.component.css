@@ -16,6 +16,10 @@ mat-card {
   margin-bottom: 3em;
 }
 
+pre {
+  white-space: pre-wrap;
+}
+
 .incorrect {
   background-color: mistyrose;
   border-radius: 1em;
