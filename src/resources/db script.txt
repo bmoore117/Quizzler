@@ -14,8 +14,8 @@ db.questions.insert({_id: 3, question: 'To pass an array of strings to a functio
 db.questions.insert({_id: 4, question: '____ and ____ would be the HTML tags you would use to display a menu item and its description',
   answers: ['<li> + <a>', '<div> + <span>', '<menu> + <menuItem>'], correctAnswers: [0]})
 
-db.questions.insert({_id: 5, question: 'Given <div id='outer'><div class='inner'></div></div>, which of these two is the most performant way to select the inner div ?',
-  answers: ['getElementById('outer').children[0]', 'getElementsByClassName('inner')[0]'], correctAnswers: [0]})
+db.questions.insert({_id: 5, question: "Given <div id='outer'><div class='inner'></div></div>, which of these two is the most performant way to select the inner div ?",
+  answers: ["getElementById('outer').children[0]", "getElementsByClassName('inner')[0]"], correctAnswers: [0]})
 
 db.questions.insert({_id: 6, question: 'Given the following, which message will be returned by injecting this service and executing \'myService.getMessage()\'?',
   code: 'angular.module(\'myModule\', []).service(\'myService\', (function() {\n\tvar message = "Message one!"\n\tvar getMessage = function() {\n\t\treturn this.message\n\t}\n\tthis.message = "Message two!"\n\tthis.getMessage = function() {\n\t\treturn message\n\t}\n\treturn function() {\n\t\treturn {\n\t\t\tgetMessage: getMessage,\n\t\t\tmessage: "Message three!"\n\t\t}\n\t}\n})())',
