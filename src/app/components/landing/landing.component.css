@@ -10,7 +10,7 @@ div {
 
 .logo {
   font-family: Roboto,"Helvetica Neue",sans-serif;
-  font-size: 8em;
+  font-size: 10vw;
   font-weight: normal;
   color: #673ab7;
 
@@ -21,7 +21,7 @@ div {
 
 .subtext {
   font-family: Roboto,"Helvetica Neue",sans-serif;
-  font-size: 2em;
+  font-size: 2.5vw;
   font-weight: normal;
   font-style: italic;
   color: #ffd740;
