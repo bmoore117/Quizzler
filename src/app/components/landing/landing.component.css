@@ -1,16 +1,6 @@
-div {
-  display: flex;
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  left: 0;
-  top: 0;
-  overflow: auto;
-}
-
 .logo {
   font-family: Roboto,"Helvetica Neue",sans-serif;
-  font-size: 7vw;
+  font-size: 8em;
   font-weight: normal;
   color: #673ab7;
   margin-top: 0;
@@ -19,7 +9,7 @@ div {
 
 .subtext {
   font-family: Roboto,"Helvetica Neue",sans-serif;
-  font-size: 2.5vw;
+  font-size: 3em;
   font-weight: normal;
   font-style: italic;
   color: #ffd740;
