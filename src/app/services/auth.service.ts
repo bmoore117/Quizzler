@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import Auth0Lock from 'auth0-lock';
 
-import { AuthHttp } from './auth-http.service';
+import { EventbusService } from './eventbus.service';
 
 @Injectable()
 export class AuthService {
@@ -14,8 +14,7 @@ export class AuthService {
   id_token: any;
   exp: number;
 
-  constructor(private http: AuthHttp, private router: Router) {
-
+  constructor(private router: Router, private eventBus: EventbusService) {
     let callbackUrl = window.location.protocol + '//' + window.location.hostname;
     if (window.location.port !== '0' && window.location.port !== '') {
       callbackUrl = callbackUrl + ':' + window.location.port;
@@ -52,16 +51,21 @@ export class AuthService {
   setSession(authResult): void {
     this.access_token = authResult.accessToken;
     this.id_token = authResult.idToken;
-    this.http.credential = authResult.idToken;
     this.exp = authResult.idTokenPayload.exp as number * 1000;
+
+    // publish auth status for other services that need it
+    this.eventBus.idToken.next(this.id_token);
+    this.eventBus.loggedIn.next(true);
   }
 
   logout(): void {
     this.access_token = undefined;
     this.id_token = undefined;
     this.exp = undefined;
-    this.http.credential = undefined;
     this.router.navigate(['/']);
+
+    this.eventBus.idToken.next(undefined);
+    this.eventBus.loggedIn.next(false);
   }
 
   isAuthenticated(): boolean {

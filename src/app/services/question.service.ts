@@ -8,6 +8,7 @@ import Answer from '../models/answer';
 import Question from '../models/question';
 import Results from '../models/results';
 import { AuthHttp } from './auth-http.service';
+import { EventbusService } from './eventbus.service';
 
 @Injectable()
 export class QuestionService {
@@ -17,18 +18,23 @@ export class QuestionService {
   quizActive: BehaviorSubject<boolean>;
   private answers: Answer[];
 
-  constructor(private http: AuthHttp) {
+  constructor(private http: AuthHttp, private eventBus: EventbusService) {
     this.questionIdx = new BehaviorSubject(1);
     this.maxQuestionId = new BehaviorSubject(1); // default init val
     this.quizActive = new BehaviorSubject(false);
     this.answers = [];
-    this.http.get('api/question/max')
-      .map((response: Response) => {
-        return response.json()._id;
-      }).subscribe(data => {
-        this.maxQuestionId.next(data);
-        this.answers = new Array(5);
-      });
+
+    this.eventBus.loggedIn.subscribe(isLoggedIn => {
+      if (isLoggedIn === true) {
+        this.http.get('api/question/max')
+        .map((response: Response) => {
+          return response.json()._id;
+        }).subscribe(data => {
+          this.maxQuestionId.next(data);
+          this.answers = new Array(5);
+        });
+      }
+    });
   }
 
   fetchQuestion(idx: number): Observable<Question> {

@@ -16,6 +16,7 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 import { AuthGuard } from './services/auth-guard.service';
 import { AuthHttp } from './services/auth-http.service';
 import { AuthService } from './services/auth.service';
+import { EventbusService } from './services/eventbus.service';
 import { QuestionService } from './services/question.service';
 
 const routes: Routes = [
@@ -54,7 +55,7 @@ const routes: Routes = [
     MatRadioModule,
     RouterModule.forRoot(routes, {enableTracing: true})
   ],
-  providers: [AuthGuard, AuthHttp, AuthService, QuestionService],
+  providers: [AuthGuard, AuthHttp, AuthService, EventbusService, QuestionService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
