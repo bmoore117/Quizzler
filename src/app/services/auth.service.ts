@@ -18,7 +18,7 @@ export class AuthService {
     this.lock = new Auth0Lock('BqmY5UFBAz6oOVFASRW30QeSzQkj0pUj', 'bmoore.auth0.com', {
       autoClose: true,
       auth: {
-        redirectUrl: 'http://localhost:3000/callback',
+        redirectUrl: window.location.protocol + '//' + window.location.hostname + ':' + window.location.port + '/callback',
         responseType: 'token id_token',
         params: {
           scope: 'openid' // Learn about scopes: https://auth0.com/docs/scopes
