@@ -1,11 +1,11 @@
 db.questions.insert({_id: 1, question: 'Which is not an advantage of using a closure?',
   answers: ['Prevent pollution of global scope', 'Encapsulation',
-      'Private properties and methods', 'Allow conditional use of "strict mode"'
-    ],
+    'Private properties and methods', 'Allow conditional use of "strict mode"'
+  ],
   correctAnswers: [2]})
 
-db.questions.insert({_id: 2, question: 'To create a columned list of two­line email subjects and dates for a master­detail view, which is the most semantically correct?',
-    answers: ['<div> + <span>', '<tr> + <td>', '<ul> + <li>', '<p> + <br>', 'none of these', 'all of these'],
+db.questions.insert({_id: 2, question: 'To create a columned list of two line email subjects and dates for a master detail view, which is the most semantically correct?',
+  answers: ['<div> + <span>', '<tr> + <td>', '<ul> + <li>', '<p> + <br>', 'none of these', 'all of these'],
   correctAnswers: [2]})
 
 db.questions.insert({_id: 3, question: 'To pass an array of strings to a function, you should not use...',
@@ -18,5 +18,5 @@ db.questions.insert({_id: 5, question: "Given <div id='outer'><div class='inner'
   answers: ["getElementById('outer').children[0]", "getElementsByClassName('inner')[0]"], correctAnswers: [0]})
 
 db.questions.insert({_id: 6, question: 'Given the following, which message will be returned by injecting this service and executing \'myService.getMessage()\'?',
-  code: 'angular.module(\'myModule\', []).service(\'myService\', (function() {\n\tvar message = "Message one!"\n\tvar getMessage = function() {\n\t\treturn this.message\n\t}\n\tthis.message = "Message two!"\n\tthis.getMessage = function() {\n\t\treturn message\n\t}\n\treturn function() {\n\t\treturn {\n\t\t\tgetMessage: getMessage,\n\t\t\tmessage: "Message three!"\n\t\t}\n\t}\n})())',
+  code: 'angular.module(\'myModule\', []).service(\'myService\', (function() {\n\tvar message = "Message one!"\n\tvar getMessage = function() {\n\t\treturn this.message\n\t}\n\tthis.message = "Message two!"\n\tthis.getMessage = function() {\n\t\treturn message\n\t}\n\treturn function() {\n\t\treturn {\n\t\t\tgetMessage: getMessage,\n\t\t\tmessage: "Message three!"\n\t\t}\n\t}\n})())',
   answers: ['Message 1', 'Message 2', 'Message 3'], correctAnswers: [2]})
