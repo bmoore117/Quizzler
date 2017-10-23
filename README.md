@@ -1,5 +1,11 @@
 # Quizzler
 
+Inspired by Thomas Burleson's challenge, this repo hosts an online quiz app which can be accessed at https://quizzler-demo.herokuapp.com/.
+
+Note: as the app is currently hosted on heroku free dynos, it will take some time to start up if previously inactive.
+
+The app is written in Angular2, with a Node.JS backend, connected to a mongoDB database. The app allows users to log in with Facebook or Google, or email and password if they wish. They then click through a series of multiple choice questions, and receive their score at the end.
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.2.3.
 
 ## Development server
